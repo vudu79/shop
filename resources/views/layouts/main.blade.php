@@ -30,6 +30,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="http://laravel-diplom-1.rdavydov.ru/admin/home">Панель администратора</a></li>
             </ul>
+
+
         </div>
     </div>
 </nav>
@@ -37,6 +39,11 @@
 
 <div class="container">
     <div class="starter-template">
+        @if(session()->has('success'))
+            <p class="alert alert-success">{{ session()->get('success') }}</p>
+        @elseif(session()->has('danger'))
+            <p class="alert alert-success">{{ session()->get('danger') }}</p>
+        @endif
 
         @yield('content')
 

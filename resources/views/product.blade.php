@@ -1,10 +1,16 @@
-@extends('leyauts.main')
+@extends('layouts.main')
 @section('content')
 
     <h1>{{ $product->name }}</h1>
     <p>Цена: <b>{{ $product->price }} руб.</b></p>
-    <img src="http://laravel-diplom-1.rdavydov.ru/storage/products/iphone_x.jpg">
+    <img src="{{ Storage::url($product->image) }}">
     <p>{{ $product->description }}</p>
-    <a class="btn btn-success" href="http://laravel-diplom-1.rdavydov.ru/basket/1/add">Добавить в корзину</a>
+
+    <form action="{{ route('basket.add', $product) }}" method="post">
+        @csrf
+        <button type="submit" class="btn btn-success"
+                role="button">Добавить в корзину</button>
+    </form>
+
 
 @endsection

@@ -20,16 +20,31 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ route('main') }}">Все товары</a></li>
-                <li><a href="{{ route('categories') }}">Категории</a>
+                <li @routeactive('main')><a href="{{ route('main') }}">Все товары</a></li>
+                <li @routeactive('categories')><a href="{{ route('categories') }}">Категории</a>
                 </li>
-                <li><a href="{{ route('basket') }}">В корзину</a></li>
-                <li><a href="http://laravel-diplom-1.rdavydov.ru/reset">Сбросить проект в начальное состояние</a></li>
+                <li @routeactive('basket')><a href="{{ route('basket') }}">В корзину</a></li>
+                {{--                <li><a href="http://laravel-diplom-1.rdavydov.ru/reset">Сбросить проект в начальное состояние</a></li>--}}
             </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="http://laravel-diplom-1.rdavydov.ru/admin/home">Панель администратора</a></li>
-            </ul>
+            @guest()
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('login') }}">Войти</a></li>
+                </ul>
+            @endguest
+
+            @auth()
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('get-logout') }}">{{ isset(auth()->user()->name) ? auth()->user()->name :'' }}</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('admin') }}">Панель администратора</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('get-logout') }}">Выйти</a></li>
+                </ul>
+
+            @endauth
 
 
         </div>
@@ -42,7 +57,9 @@
         @if(session()->has('success'))
             <p class="alert alert-success">{{ session()->get('success') }}</p>
         @elseif(session()->has('danger'))
-            <p class="alert alert-success">{{ session()->get('danger') }}</p>
+            <p class="alert alert-danger">{{ session()->get('danger') }}</p>
+        @elseif(session()->has('emptybasket'))
+            <p class="alert alert-danger">{{ session()->get('emptybasket') }}</p>
         @endif
 
         @yield('content')

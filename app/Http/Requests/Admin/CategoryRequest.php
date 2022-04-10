@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,16 @@ class OrderRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'=>'required|string|max:255',
-            'phone'=>'required|unique:orders|numeric'
+        $rules = [
+            'name'=>'required|string|min:3',
+            'code'=>'required|string|min:3',
+            'description'=>'required|string|min:3',
+            'image'=>'image'
         ];
+        if ($this->route()->named() == 'categories.update'){
+            $rules['code'] = ',' . $this->route()->parameter('category')->id;
+        }
+        return $rules;
+
     }
 }

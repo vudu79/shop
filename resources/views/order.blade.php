@@ -1,30 +1,30 @@
-@extends('leyauts.main')
+@extends('layouts.main')
 
 @section('content')
 
     <section class="content">
         <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
             <div class="card card-primary mt-3">
-
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form method="post" action="{{ route('admin.category.store') }}">
+                <h3>Подтвердите заказ</h3>
+                <p>Общая стоимоть заказа: {{ $order->getTotalPrice() ?? '0 руб.' }}</p>
+                <form method="post" action="{{ route('basket.confirm') }}">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <input autofocus name="title" value="{{ old('title') }}" type="text"
+                            <input autofocus name="name" type="text" value="{{ old('name') }}"
                                    class="form-control"
-                                   placeholder="Наименование категории">
-                            @error('title')
-                            <div class="text-danger">
-                                Это обязательно к заполнению
-                            </div>
-                            @enderror
+                                   placeholder="Имя">
                         </div>
 
-                        <div>
-                            <button type="submit" class="form-control btn btn-block btn-outline-secondary ">Добавить
+                        <div class="form-group">
+                            <input autofocus name="phone"  type="text" value="{{ old('phone') }}"
+                                   class="form-control"
+                                   placeholder="Номер телефона">
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success ">
+                                Подтвердить заказ
                             </button>
                         </div>
                     </div>

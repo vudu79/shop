@@ -30,7 +30,10 @@
                     <label for="code" class="col-sm-2 col-form-label">Код: </label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="code" id="code"
-                               value="@isset($category){{ $category->code }}@endisset">
+                               value="description{{ old('code', isset($category) ? $category->code : null) }}">
+                        @error('code')
+                        {{ $message }}
+                        @enderror
                     </div>
                 </div>
                 <br>
@@ -38,7 +41,10 @@
                     <label for="name" class="col-sm-2 col-form-label">Название: </label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="name" id="name"
-                               value="@isset($category){{ $category->name }}@endisset">
+                               value="{{ old('name', isset($category) ? $category->name : null) }}">
+                        @error('name')
+                        {{ $message }}
+                        @enderror
                     </div>
                 </div>
                 <br>
@@ -46,7 +52,10 @@
                     <label for="description" class="col-sm-2 col-form-label">Описание: </label>
                     <div class="col-sm-6">
 							<textarea name="description" id="description" cols="72"
-                                      rows="7">@isset($category){{ $category->description }}@endisset</textarea>
+                                      rows="7">{{ old('description', isset($category) ? $category->description : null) }}</textarea>
+                        @error('description')
+                        {{ $message }}
+                        @enderror
                     </div>
                 </div>
                 <br>
@@ -55,6 +64,9 @@
                     <div class="col-sm-10">
                         <label class="btn btn-default btn-file">
                             Загрузить <input type="file" style="display: none;" name="image" id="image">
+                            @error('image')
+                            {{ $message }}
+                            @enderror
                         </label>
                     </div>
                 </div>

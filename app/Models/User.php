@@ -33,11 +33,21 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes thaЁt should be cast.
      *
      * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin()
+    {
+        return $this->is_admin === 1;
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

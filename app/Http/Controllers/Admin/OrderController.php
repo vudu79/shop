@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use function view;
 
-class AdminController extends Controller
+class OrderController extends Controller
 {
     public function index()
     {

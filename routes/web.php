@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,13 +13,29 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group([
-    'middleware' => 'auth',
-    'prefix' => 'admin',
-    'namespace' => 'Admin'], function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin');
-    Route::resource('categories', 'CategoryController');
-    Route::resource('products', 'ProductController');
+
+Route::middleware(['auth'])->group(function (){
+
+    Route::group([
+        'prefix' => 'admin',
+        'namespace' => 'Admin'], function () {
+        Route::get('/', 'OrderController@index')->name('home');
+        Route::get('/show/{order}', 'OrderController@show')->name('order.show');
+        Route::resource('categories', 'CategoryController');
+        Route::resource('products', 'ProductController');
+    });
+
+    Route::group([
+        'prefix' => 'person',
+        'namespace' => 'Person',
+        'as'=>'person.'], function () {
+        Route::get('/','OrderController@index')->name('order.index');
+        Route::get('/show/{order}', 'OrderController@show')->name('order.show');
+        Route::resource('categories', 'CategoryController');
+        Route::resource('products', 'ProductController');
+    });
+
+
 });
 
 

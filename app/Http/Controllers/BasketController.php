@@ -25,6 +25,7 @@ class BasketController extends Controller
 
     public function basketAdd($product)
     {
+
         $orderId = session('orderId');
         if (is_null($orderId)) {
             $order = Order::create();
@@ -52,6 +53,7 @@ class BasketController extends Controller
 //        dd($order);
         if (!is_null($orderId)) {
             $order = Order::find($orderId);
+
         } else {
             return redirect()->route('basket');
         }
@@ -73,6 +75,7 @@ class BasketController extends Controller
         }
         $order = Order::find($orderId);
 
+//dd(auth()->user());
         $result = $order->saveOrder($data);
 
         if ($result){

@@ -19,6 +19,9 @@
                     Когда отправлен
                 </th>
                 <th>
+                    Логин
+                </th>
+                <th>
                     Сумма
                 </th>
                 <th>
@@ -31,11 +34,19 @@
                     <td>{{ $order->name }}</td>
                     <td>{{ $order->phone }}</td>
                     <td>{{ $order->created_at->format('H:i d/m/Y') }}</td>
+                    <td>{{ $order->user->name }}</td>
                     <td>{{ $order->getTotalPrice() }} руб.</td>
                     <td>
                         <div class="btn-group" role="group">
-                            <a class="btn btn-success" type="button"
-                               href="http://laravel-diplom-1.rdavydov.ru/admin/orders/1">Открыть</a>
+                            @admin
+                                <a class="btn btn-success" type="button"
+                                   href="{{ route('order.show', $order->id) }}">Открыть</a>
+                            @else
+                                <a class="btn btn-success" type="button"
+                                   href="{{ route('person.order.show', $order->id) }}">Открыть</a>
+                            @endadmin
+
+
                         </div>
                     </td>
                 </tr>

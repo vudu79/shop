@@ -30,12 +30,19 @@ class Order extends Model
     {
         if ($this->status == 0) {
             $this->status = 1;
+            $this['user_id'] = auth()->user()->id;
             $this->update($data);
+
             session()->forget('orderId');
             return true;
 
         } else {
             return false;
         }
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

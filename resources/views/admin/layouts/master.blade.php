@@ -32,11 +32,14 @@
 
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li @routeactive('categories.index')><a href="{{route('categories.index')}}">Категории</a></li>
-
-                    <li @routeactive('products.index')><a href="{{ route('products.index') }}">Товары</a>
                     </li>
-                    <li @routeactive('main')><a href="http://laravel-diplom-1.rdavydov.ru/admin/orders">Заказы</a></li>
+                    @admin()
+                    <li @routeactive('categories.index')><a href="{{route('categories.index')}}">Категории</a></li>
+                    <li @routeactive('products.index')><a href="{{ route('products.index') }}">Товары</a>
+                    <li @routeactive('home')><a href="{{ route('home') }}">Заказы</a></li>
+                    @else
+                        <li @routeactive('main')><a href="{{ route('person.order.index') }}">Заказы</a></li>
+                    @endadmin
                 </ul>
 
 
@@ -52,6 +55,14 @@
                 @endguest
 
                 @auth
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-item" href="" >{{auth()->user()->name}}</a>
+
+
+                        </li>
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item dropdown">
                                 <a class="dropdown-item" href="{{ route('logout')}}" >Выйти</a>

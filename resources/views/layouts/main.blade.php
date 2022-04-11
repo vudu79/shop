@@ -37,9 +37,17 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ route('get-logout') }}">{{ isset(auth()->user()->name) ? auth()->user()->name :'' }}</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('admin') }}">Панель администратора</a></li>
-                </ul>
+                @admin
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ route('home') }}">Панель администратора</a></li>
+                    </ul>
+
+                @else
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ route('person.order.index') }}">Мои заказы</a></li>
+                    </ul>
+                @endadmin
+
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ route('get-logout') }}">Выйти</a></li>
                 </ul>

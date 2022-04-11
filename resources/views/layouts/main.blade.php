@@ -42,6 +42,10 @@
                         <li><a href="{{ route('home') }}">Панель администратора</a></li>
                     </ul>
 
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('reset') }}">Вернуть сайт в исходное состояние</a></li>
+                </ul>
+
                 @else
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{{ route('person.order.index') }}">Мои заказы</a></li>

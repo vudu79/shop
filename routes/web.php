@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth'])->group(function (){
+Route::get('reset', 'ResetController@reset')->name('reset');
 
+Route::middleware(['auth'])->group(function (){
     Route::group([
         'prefix' => 'admin',
         'namespace' => 'Admin'], function () {

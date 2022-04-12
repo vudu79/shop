@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('reset', 'ResetController@reset')->name('reset');
 
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth'])->group(function () {
     Route::group([
         'prefix' => 'admin',
         'namespace' => 'Admin'], function () {
@@ -29,8 +30,8 @@ Route::middleware(['auth'])->group(function (){
     Route::group([
         'prefix' => 'person',
         'namespace' => 'Person',
-        'as'=>'person.'], function () {
-        Route::get('/','OrderController@index')->name('order.index');
+        'as' => 'person.'], function () {
+        Route::get('/', 'OrderController@index')->name('order.index');
         Route::get('/show/{order}', 'OrderController@show')->name('order.show');
         Route::resource('categories', 'CategoryController');
         Route::resource('products', 'ProductController');
@@ -47,11 +48,19 @@ Route::get('/', 'MainController@index')->name('main');
 Route::get('/categories', 'MainController@categories')->name('categories');
 Route::get('/category/{category}', 'MainController@category')->name('category');
 Route::get('/product/{product}', 'MainController@product')->name('product');
-Route::get('/basket', 'BasketController@basket')->name('basket')->middleware('emptybasket');
-Route::get('/basket/place/{order}', 'BasketController@basketPlace')->name('basket.place');
-Route::post('/basket/confirm', 'BasketController@basketConfirm')->name('basket.confirm');
-Route::post('/basket/add/{id}', 'BasketController@basketAdd')->name('basket.add');
-Route::delete('/basket/remove/{id}', 'BasketController@basketRemove')->name('basket.remove');
 
-Auth::routes();
+Route::group(['prefix' => 'basket'], function () {
+    Route::post('/add/{id}', 'BasketController@basketAdd')->name('basket.add');
+
+    Route::group(['middleware' => 'emptyBasket'], function () {
+
+        Route::get('/', 'BasketController@basket')->name('basket');
+        Route::get('/place/{order}', 'BasketController@basketPlace')->name('basket.place');
+        Route::post('/confirm', 'BasketController@basketConfirm')->name('basket.confirm');
+        Route::delete('/remove/{id}', 'BasketController@basketRemove')->name('basket.remove');
+
+    });
+});
+
+
 

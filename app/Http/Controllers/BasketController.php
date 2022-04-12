@@ -13,15 +13,8 @@ class BasketController extends Controller
 
     public function basket()
     {
-
-//        session()->forget('full_order_summ');
         $orderId = session('orderId');
-        if (!is_null($orderId)) {
-            $order = Order::find($orderId);
-        } else {
-            $order = null;
-        }
-
+        $order = Order::find($orderId);
         return view('basket', compact('order'));
     }
 
@@ -59,14 +52,7 @@ class BasketController extends Controller
     public function basketPlace($order)
     {
         $orderId = session('orderId');
-//        dd($order);
-        if (!is_null($orderId)) {
-            $order = Order::find($orderId);
-
-        } else {
-            return redirect()->route('basket');
-        }
-
+        $order = Order::find($orderId);
         return view('order', compact('order'));
     }
 
@@ -77,9 +63,6 @@ class BasketController extends Controller
 
         $orderId = session('orderId');
 
-        if (is_null($orderId)) {
-            return redirect()->route('basket');
-        }
         $order = Order::find($orderId);
 
 //dd(auth()->user());
@@ -99,11 +82,6 @@ class BasketController extends Controller
     public function basketRemove($productId)
     {
         $orderId = session('orderId');
-
-        if (is_null($orderId)) {
-            return redirect()->route('basket');
-        }
-
         $order = Order::find($orderId);
 
         if ($order->products->contains($productId)) {
@@ -118,7 +96,6 @@ class BasketController extends Controller
         $product = Product::find($productId);
 
         Order::changeFullSumm(-$product->price);
-
 
         session()->flash('removeProduct', 'Товар "' . $product->name . '" удален из корзины');
         return redirect()->route('basket');

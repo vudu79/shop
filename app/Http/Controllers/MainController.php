@@ -13,8 +13,9 @@ class MainController extends Controller
 {
     public function index(ProductsFilterRequest $request)
     {
+//        session()->forget('full_order_summ');
 
-        \Debugbar::info("sdfsasdadsasdasdfdsfdsf");
+//        \Debugbar::info("sdfsasdadsasdasdfdsfdsf");
 //        Log::channel('single')->info($request->getClientIp());
         $productsQuery = Product::with('category');
 

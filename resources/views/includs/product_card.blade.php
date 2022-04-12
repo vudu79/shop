@@ -21,7 +21,10 @@
             <form action="{{ route('basket.add', $product) }}" method="post">
                 @csrf
                 <button type="submit" class="btn btn-primary"
-                        role="button">В корзину
+                        role="button"
+                        role="button"9
+                    {{ !$product->isAvailable() ? ' disabled' : '' }}
+                >{{ $product->isAvailable() ? 'Добавить в корзину' : 'Нет в наличии' }}
                 </button>
                 <a href="{{ route('product', $product->id) }}" class="btn btn-default"
                    role="button">Подробнее</a>

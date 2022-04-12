@@ -88,6 +88,18 @@
 
                 @endforeach
 
+                    <div class="input-group row">
+                        <label for="count" class="col-sm-2 col-form-label">В наличии</label>
+                        <div class="col-sm-6">
+                            <input type="checkbox" name="count" id="count"
+                                   @if(isset($product) && $product->count === 1)
+                                   checked="checked"
+                                @endif
+                            >
+                            <x-error name="$field"/>
+                        </div>
+                    </div>
+
                 <div class="input-group row">
                     <label for="image" class="col-sm-2 col-form-label">Картинка: </label>
                     <div class="col-sm-10">
@@ -106,6 +118,18 @@
                         <x-error name="price"/>
                     </div>
                 </div>
+
+
+                    <div class="input-group row my-3">
+                        <label for="count" class="col-sm-2 col-form-label">В наличии: </label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="count" id="count"
+                                   value="@isset($product){{ $product->count }} @else {{ old('count') }} @endisset">
+                            <x-error name="count"/>
+                        </div>
+                    </div>
+
+
                 <button class="btn btn-success">Сохранить</button>
             </div>
         </form>

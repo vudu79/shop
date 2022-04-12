@@ -55,7 +55,7 @@ class MainController extends Controller
 
     public function product($product = null)
     {
-        $product = Product::find($product);
+        $product = Product::withTrashed()->find($product);
         return view('product', compact('product'));
     }
 

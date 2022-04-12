@@ -20,7 +20,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($order->products as $product)
+                        @foreach ($products as $product)
                             <tr>
                                 <td>
                                     <a href="{{ route('product', $product) }}">
@@ -36,7 +36,7 @@
                         @endforeach
                         <tr>
                             <td colspan="3">Общая стоимость:</td>
-                            <td>{{ $order->getFullSumm() }} руб.</td>
+                            <td>{{ $order->calculateFullSumm() }} руб.</td>
                         </tr>
                         </tbody>
                     </table>

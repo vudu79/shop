@@ -19,7 +19,7 @@ class Order extends Model
     public function calculateFullSumm()
     {
         $summ = 0;
-        foreach ($this->products as $product) {
+        foreach ($this->products()->withTrashed()->get() as $product) {
             $summ += $product->getPriceForCount();
         }
         return $summ;

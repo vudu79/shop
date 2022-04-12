@@ -9,7 +9,28 @@ class Product extends Model
 {
     use HasFactory;
 
+
     protected $guarded = [];
+
+//    Мутатор
+
+    protected function setNewAttribute($value)
+    {
+        $this->attributes['new'] = $value === "on" ? 1 : 0;
+    }
+
+
+    protected function setHitAttribute($value)
+    {
+        $this->attributes['hit'] = $value === "on" ? 1 : 0;
+    }
+
+
+    protected function setRecommendAttribute($value)
+    {
+        $this->attributes['recommend'] = $value === "on" ? 1 : 0;
+    }
+
 
     public function category()
     {
@@ -31,4 +52,19 @@ class Product extends Model
         }
     }
 
+    public function isNew()
+    {
+        return $this->new === 1;
+    }
+
+    public function isHit()
+    {
+        return $this->hit === 1;
+    }
+
+    public function isRecommend()
+    {
+        return $this->recommend === 1;
+    }
 }
+

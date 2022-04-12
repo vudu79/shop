@@ -28,11 +28,9 @@
                 <div class="input-group row">
                     <label for="code" class="col-sm-2 col-form-label">Код: </label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" name="code" id="code"
+                        <input autofocus type="text" class="form-control" name="code" id="code"
                                value="{{ old('code', isset($product) ? $product->code : null) }}">
-                        @error('code')
-                        {{ $message }}
-                        @enderror
+                        <x-error name="code"/>
                     </div>
                 </div>
                 <br>
@@ -41,9 +39,7 @@
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="name" id="name"
                                value="{{ old('name', isset($product) ? $product->name : null) }}">
-                        @error('name')
-                        {{ $message }}
-                        @enderror
+                        <x-error name="name"/>
                     </div>
                 </div>
                 <br>
@@ -70,20 +66,34 @@
                     <div class="col-sm-6">
 								<textarea name="description" id="description" cols="72"
                                           rows="7">{{ old('description', isset($product) ? $product->description : null) }}</textarea>
-                        @error('description')
-                        {{ $message }}
-                        @enderror
+                        <x-error name="description"/>
                     </div>
                 </div>
                 <br>
+
+                @foreach(['new'=>'Новинка','hit'=>'Хит продаж','recommend'=>'Рекомендуем'] as $field => $title)
+
+                    <div class="input-group row">
+                        <label for="{{ $field }}" class="col-sm-2 col-form-label">{{ $title }}</label>
+                        <div class="col-sm-6">
+                            <input type="checkbox" name="{{ $field }}" id="{{ $field }}"
+                                   @if(isset($product) && $product->$field === 1)
+                                   checked="checked"
+                                @endif
+                            >
+                            <x-error name="$field"/>
+                        </div>
+                    </div>
+                    <br>
+
+                @endforeach
+
                 <div class="input-group row">
                     <label for="image" class="col-sm-2 col-form-label">Картинка: </label>
                     <div class="col-sm-10">
                         <label class="btn btn-default btn-file">
-                            Загрузить <input type="file"  name="image" id="image">
-                            @error('image')
-                            {{ $message }}
-                            @enderror
+                            Загрузить <input type="file" name="image" id="image">
+                            <x-error name="image"/>
                         </label>
                     </div>
                 </div>
@@ -93,9 +103,7 @@
                     <div class="col-sm-2">
                         <input type="text" class="form-control" name="price" id="price"
                                value="@isset($product){{ $product->price }} @else {{ old('price') }} @endisset">
-                        @error('price')
-                        {{ $message }}
-                        @enderror
+                        <x-error name="price"/>
                     </div>
                 </div>
                 <button class="btn btn-success">Сохранить</button>

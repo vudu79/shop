@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -13,7 +12,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(10);
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -29,7 +28,7 @@ class CategoryController extends Controller
         $data = $request->validated();
 
         if ($request->has('image')){
-            $data['image'] =Storage::disk('public')->put('/images', $data['image']);
+            $data['image'] =Storage::disk('public')->put('/categories', $data['image']);
         }
 
         Category::create($data);

@@ -33,12 +33,30 @@
             </tr>
             <tr>
                 <td>Картинка</td>
-                <td><img src="{{ Storage::url($product->image) }}" ></td>
+                <td><img src="{{ Storage::url($product->image) }}"></td>
             </tr>
             <tr>
                 <td>Категория</td>
                 <td>{{ $product->category->name }}</td>
             </tr>
+            <td>Лейблы</td>
+            <td>
+                <div class="labels">
+                    @if($product->isNew())
+                        <span class="badge badge-success">Новинка</span>
+                    @endif
+                    @if($product->isRecommend())
+                        <span class="badge badge-warning">Рекомендуем</span>
+                    @endif
+                    @if($product->isHit())
+                        <span class="badge badge-danger">Хит</span>
+                    @endif
+                </div>
+            </td>
+
+            </tr>
+
+
             </tbody>
         </table>
     </div>

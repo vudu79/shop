@@ -30,10 +30,8 @@
                     <label for="code" class="col-sm-2 col-form-label">Код: </label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="code" id="code"
-                               value="description{{ old('code', isset($category) ? $category->code : null) }}">
-                        @error('code')
-                        {{ $message }}
-                        @enderror
+                               value="{{ old('code', isset($category) ? $category->code : null) }}">
+                        <x-error name="code"/>
                     </div>
                 </div>
                 <br>
@@ -42,9 +40,7 @@
                     <div class="col-sm-6">
                         <input type="text" class="form-control" name="name" id="name"
                                value="{{ old('name', isset($category) ? $category->name : null) }}">
-                        @error('name')
-                        {{ $message }}
-                        @enderror
+                        <x-error name="name"/>
                     </div>
                 </div>
                 <br>
@@ -53,9 +49,7 @@
                     <div class="col-sm-6">
 							<textarea name="description" id="description" cols="72"
                                       rows="7">{{ old('description', isset($category) ? $category->description : null) }}</textarea>
-                        @error('description')
-                        {{ $message }}
-                        @enderror
+                        <x-error name="description"/>
                     </div>
                 </div>
                 <br>
@@ -64,9 +58,7 @@
                     <div class="col-sm-10">
                         <label class="btn btn-default btn-file">
                             Загрузить <input type="file" style="display: none;" name="image" id="image">
-                            @error('image')
-                            {{ $message }}
-                            @enderror
+                            <x-error name="image"/>
                         </label>
                     </div>
                 </div>

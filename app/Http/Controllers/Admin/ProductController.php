@@ -14,7 +14,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(10);
         return view('admin.products.index', compact('products'));
     }
 
@@ -28,10 +28,11 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
+//        dd($request);
         $data = $request->validated();
 
         if ($request->has('image')) {
-            $data['image'] = Storage::disk('public')->put('/images', $data['image']);
+            $data['image'] = Storage::disk('public')->put('/products', $data['image']);
         }
 
         Product::create($data);
@@ -61,6 +62,12 @@ class ProductController extends Controller
         if ($request->has('image')) {
             Storage::disk('public')->delete($product->image);
             $data['image'] = Storage::disk('public')->put('/images', $data['image']);
+        }
+
+        foreach (['new', 'hit', 'recommend'] as $fild) {
+            if (!isset($request[$fild])) {
+                $data[$fild] = 0;
+            }
         }
 
         $product->update($data);

@@ -50,6 +50,10 @@
             @endforeach
             </tbody>
         </table>
+        <div class="d-flex justify-content-center" >
+            {{ $products->links() }}
+        </div>
+
         <a class="btn btn-success" type="button" href="{{ route('products.create') }}">Добавить товар</a>
     </div>
 @endsection

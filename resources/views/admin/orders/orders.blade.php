@@ -35,7 +35,7 @@
                     <td>{{ $order->phone }}</td>
                     <td>{{ $order->created_at->format('H:i d/m/Y') }}</td>
                     <td>{{ $order->user->name }}</td>
-                    <td>{{ $order->getTotalPrice() }} руб.</td>
+                    <td>{{ $order->getFullSumm() }} руб.</td>
                     <td>
                         <div class="btn-group" role="group">
                             @admin

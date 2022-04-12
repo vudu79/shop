@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="card card-primary mt-3">
                 <h3>Подтвердите заказ</h3>
-                <p>Общая стоимоть заказа: {{ $order->getTotalPrice() ?? '0 руб.' }}</p>
+                <p>Общая стоимоть заказа: {{ $order->calculateFullSumm() ?? '0 руб.' }}</p>
                 <form method="post" action="{{ route('basket.confirm') }}">
                     @csrf
                     <div class="card-body">
@@ -14,7 +14,7 @@
                             <input autofocus name="name" type="text" value="{{ old('name') }}"
                                    class="form-control"
                                    placeholder="Имя">
-                        </div>
+                        </div>calculateFullSumm
 
                         <div class="form-group">
                             <input autofocus name="phone"  type="text" value="{{ old('phone') }}"

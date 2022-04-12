@@ -16,7 +16,7 @@ class MainController extends Controller
 
         \Debugbar::info("sdfsasdadsasdasdfdsfdsf");
 //        Log::channel('single')->info($request->getClientIp());
-        $productsQuery = Product::query();
+        $productsQuery = Product::with('category');
 
         if ($request->filled('price_from')){
             $productsQuery->where('price', '>=', $request['price_from']);
@@ -47,7 +47,7 @@ class MainController extends Controller
 
     public function category($code)
     {
-        $category = Category::where('code', $code)->first();
+        $category = Category::with('products')->where('code', $code)->first();
 
         return view('category', compact('category'));
     }

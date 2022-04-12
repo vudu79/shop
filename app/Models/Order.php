@@ -16,7 +16,7 @@ class Order extends Model
         return $this->belongsToMany(Product::class)->withPivot('count')->withTimestamps();
     }
 
-    public function getTotalPrice()
+    public function calculateFullSumm()
     {
         $summ = 0;
         foreach ($this->products as $product) {
@@ -26,16 +26,31 @@ class Order extends Model
     }
 
 
+    public static function changeFullSumm($chengeSumm)
+    {
+        $summ = self::getFullSumm() + $chengeSumm;
+        session(['full_order_summ'=>$summ]);
+        return $summ;
+    }
+
+    public static function getFullSumm()
+    {
+        $summ = session('full_order_summ', 0);
+        return $summ;
+    }
+
+    public static function eraseOrderSumm()
+    {
+        session()->forget('full_order_summ');
+    }
+
     public function saveOrder($data)
     {
         if ($this->status == 0) {
             $this->status = 1;
-            $this['user_id'] = auth()->user()->id;
             $this->update($data);
-
             session()->forget('orderId');
             return true;
-
         } else {
             return false;
         }

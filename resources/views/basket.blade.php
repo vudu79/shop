@@ -55,7 +55,7 @@
                             </tr>
                         @endforeach
                         <td colspan="3">Общая стоимость:</td>
-                        <td>{{$order->getTotalPrice()}} руб.</td>
+                        <td>{{$order->getFullSumm()}} руб.</td>
                         </tr>
                         </tbody>
                     </table>

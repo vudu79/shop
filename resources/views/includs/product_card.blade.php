@@ -16,7 +16,7 @@
         <div class="caption">
             <h3>{{ $product->name }}</h3>
             <p>Цена: {{ $product->price }} p.</p>
-            <p>Категория: {{ $product->category->name }}</p>
+            <p>Категория: {{ isset($category) ? $category->name : $product->category->name }}</p>
             <p>
             <form action="{{ route('basket.add', $product) }}" method="post">
                 @csrf

@@ -49,16 +49,16 @@ Route::get('/categories', 'MainController@categories')->name('categories');
 Route::get('/category/{category}', 'MainController@category')->name('category');
 Route::get('/product/{product}', 'MainController@product')->name('product');
 
+
+
 Route::group(['prefix' => 'basket'], function () {
-    Route::post('/add/{id}', 'BasketController@basketAdd')->name('basket.add');
+    Route::post('/add/{product}', 'BasketController@basketAdd')->name('basket.add');
 
     Route::group(['middleware' => 'emptyBasket'], function () {
-
         Route::get('/', 'BasketController@basket')->name('basket');
         Route::get('/place/{order}', 'BasketController@basketPlace')->name('basket.place');
         Route::post('/confirm', 'BasketController@basketConfirm')->name('basket.confirm');
-        Route::delete('/remove/{id}', 'BasketController@basketRemove')->name('basket.remove');
-
+        Route::delete('/remove/{product}', 'BasketController@basketRemove')->name('basket.remove');
     });
 });
 

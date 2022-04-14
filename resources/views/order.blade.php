@@ -14,13 +14,22 @@
                             <input autofocus name="name" type="text" value="{{ old('name') }}"
                                    class="form-control"
                                    placeholder="Имя">
-                        </div>calculateFullSumm
+                        </div>
 
                         <div class="form-group">
-                            <input autofocus name="phone"  type="text" value="{{ old('phone') }}"
+                            <input autofocus name="phone" type="text" value="{{ old('phone') }}"
                                    class="form-control"
                                    placeholder="Номер телефона">
                         </div>
+                        <br>
+                        @guest()
+                            <div class="form-group">
+                                <input autofocus name="email" type="text" value="{{ old('email') }}"
+                                       class="form-control"
+                                       placeholder="Email">
+                            </div>
+                        @endguest
+
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-success ">

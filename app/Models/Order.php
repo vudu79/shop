@@ -11,6 +11,9 @@ class Order extends Model
 
     protected $guarded = [];
 
+    protected $fillable = ['user_id'];
+
+
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('count')->withTimestamps();
@@ -44,11 +47,14 @@ class Order extends Model
         session()->forget('full_order_summ');
     }
 
-    public function saveOrder($data)
+    public function saveOrder($name, $phone)
     {
         if ($this->status == 0) {
             $this->status = 1;
-            $this->update($data);
+            $this->name = $name;
+            $this->phone = $phone;
+//            $this->email = $email;
+            $this->save();
             session()->forget('orderId');
             return true;
         } else {

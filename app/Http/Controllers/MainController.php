@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductsFilterRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subscription;
 use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -17,6 +18,7 @@ class MainController extends Controller
 
 //        \Debugbar::info("sdfsasdadsasdasdfdsfdsf");
 //        Log::channel('single')->info($request->getClientIp());
+
         $productsQuery = Product::with('category');
 
         if ($request->filled('price_from')){
@@ -58,6 +60,17 @@ class MainController extends Controller
     {
         $product = Product::withTrashed()->find($product);
         return view('product', compact('product'));
+    }
+
+    public function subscribe(Request $request, Product $product)
+    {
+//        dd($product);
+        Subscription::create([
+            'email'=>$request['email'],
+            'product_id'=>$product->id,
+        ]);
+
+        return redirect()->back()->with('success', 'Спасибо, мы сообщим Вам о поступлении товара.');
     }
 
 }

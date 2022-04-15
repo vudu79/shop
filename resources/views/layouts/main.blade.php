@@ -64,7 +64,7 @@
 </nav>
 
 
-<div class="container">
+<div class="container d-flex justify-content-center">
     <div class="starter-template">
         @if(session()->has('success'))
             <p class="alert alert-success">{{ session()->get('success') }}</p>

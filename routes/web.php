@@ -33,22 +33,19 @@ Route::middleware(['auth'])->group(function () {
         'as' => 'person.'], function () {
         Route::get('/', 'OrderController@index')->name('order.index');
         Route::get('/show/{order}', 'OrderController@show')->name('order.show');
-        Route::resource('categories', 'CategoryController');
-        Route::resource('products', 'ProductController');
+//        Route::resource('/categories', 'CategoryController');
+//        Route::resource('/products', 'ProductController');
     });
-
-
 });
 
-
 Route::get('/logout', 'Auth\LoginController@logout')->name('get-logout');
-
 
 Route::get('/', 'MainController@index')->name('main');
 Route::get('/categories', 'MainController@categories')->name('categories');
 Route::get('/category/{category}', 'MainController@category')->name('category');
 Route::get('/product/{product}', 'MainController@product')->name('product');
 
+Route::post('/subscription/{product}', 'MainController@subscribe')->name('subscription');
 
 
 Route::group(['prefix' => 'basket'], function () {

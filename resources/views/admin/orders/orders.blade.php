@@ -28,33 +28,35 @@
                     Действия
                 </th>
             </tr>
-            @foreach($orders as $order)
-                <tr>
-                    <td>{{ $order->id}}</td>
-                    <td>{{ $order->name }}</td>
-                    <td>{{ $order->phone }}</td>
-                    <td>{{ $order->created_at->format('H:i d/m/Y') }}</td>
-                    <td>{{ $order->user->name }}</td>
-                    <td>{{ $order->getFullSumm() }} руб.</td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            @admin
+            @if(isset($orders))
+                @foreach($orders as $order)
+                    <tr>
+                        <td>{{ $order->id}}</td>
+                        <td>{{ $order->name }}</td>
+                        <td>{{ $order->phone }}</td>
+                        <td>{{ $order->created_at->format('H:i d/m/Y') }}</td>
+                        <td>{{ $order->user->name }}</td>
+                        <td>{{ $order->getFullSumm() }} руб.</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                @admin
                                 <a class="btn btn-success" type="button"
                                    href="{{ route('order.show', $order->id) }}">Открыть</a>
-                            @else
-                                <a class="btn btn-success" type="button"
-                                   href="{{ route('person.order.show', $order->id) }}">Открыть</a>
-                            @endadmin
+                                @else
+                                    <a class="btn btn-success" type="button"
+                                       href="{{ route('person.order.show', $order->id) }}">Открыть</a>
+                                    @endadmin
 
 
-                        </div>
-                    </td>
-                </tr>
-            @endforeach
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
             </tbody>
         </table>
-        <div class="d-flex justify-content-center" >
-            {{ $orders->links() }}
+        <div class="d-flex justify-content-center">
+{{--            {{ $orders->links() }}--}}
         </div>
 
     </div>

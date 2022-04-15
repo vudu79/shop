@@ -7,24 +7,31 @@
     <p>{{ $product->description }}</p>
 
 
-    <form action="{{ route('basket.add', $product) }}" method="POST">
-        @if($product->isAvailable())
+    @if($product->isAvailable())
+        <form action="{{ route('basket.add', $product) }}" method="POST">
+            @csrf
             <button type="submit" class="btn btn-success" role="button">Добавить в корзину</button>
-        @else
-            Не доступен
-        @endif
-        @csrf
-    </form>
+        </form>
+    @else
+        <br>
+        <span>Товар не доступен</span>
+        <br>
+        <span>Сообщить мне о появлении товара:</span>
+
+        <form action="{{ route('subscription', $product->id)}}" method="post">
+            @csrf
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                       aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <x-error name="email"/>
+
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    @endif
 
 
-
-{{--    <form action="{{ route('basket.add', $product) }}" method="post">--}}
-{{--        @csrf--}}
-{{--        <button type="submit" class="btn btn-success"--}}
-{{--                role="button"--}}
-{{--            {{ !$product->isAvailable() ? ' disabled' : '' }}--}}
-{{--        >{{ $product->isAvailable() ? 'Добавить в корзину' : 'Нет в наличии' }}</button>--}}
-{{--    </form>--}}
 
 
 @endsection

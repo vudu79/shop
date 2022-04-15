@@ -30,7 +30,7 @@ class Product extends Model
     {
         $this->attributes['recommend'] = $value === "on" ? 1 : 0;
     }
-
+//связи
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -40,6 +40,13 @@ class Product extends Model
     {
         $this->belongsToMany(Order::class);
     }
+
+    public function subscriptions()
+    {
+        $this->hasMany(Product::class);
+    }
+
+
 
     public function getPriceForCount()
     {

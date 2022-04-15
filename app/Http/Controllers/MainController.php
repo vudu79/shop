@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmailRequest;
 use App\Http\Requests\ProductsFilterRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subscription;
-use DebugBar\DebugBar;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class MainController extends Controller
 {
@@ -62,9 +60,10 @@ class MainController extends Controller
         return view('product', compact('product'));
     }
 
-    public function subscribe(Request $request, Product $product)
+    public function subscribe(EmailRequest $request, Product $product)
     {
 //        dd($product);
+
         Subscription::create([
             'email'=>$request['email'],
             'product_id'=>$product->id,

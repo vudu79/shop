@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('reset', 'ResetController@reset')->name('reset');
+Route::get('/currency/{currencyCode}', 'MainController@changeCurrency')->name('currency');
 
 Route::middleware(['auth'])->group(function () {
     Route::group([

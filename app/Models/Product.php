@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ConvertCurrency;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,9 @@ class Product extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+
+
 
 //    Мутаторы на поля таблиц
     protected function setNewAttribute($value)
@@ -76,6 +80,17 @@ class Product extends Model
     public function isAvailable()
     {
         return $this->count > 0 && !$this->trashed();
+    }
+
+    public function getPriceAttribute($value)
+    {
+        return ConvertCurrency::convert($value);
+    }
+
+
+    public function getCurrencyAttribute($currensyCode)
+    {
+         return Currency::where('code', $currensyCode)->first()->simbol;
     }
 }
 

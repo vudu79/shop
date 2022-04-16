@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmailRequest;
 use App\Http\Requests\ProductsFilterRequest;
 use App\Models\Category;
+use App\Models\Currency;
 use App\Models\Product;
 use App\Models\Subscription;
 
@@ -19,16 +20,16 @@ class MainController extends Controller
 
         $productsQuery = Product::with('category');
 
-        if ($request->filled('price_from')){
+        if ($request->filled('price_from')) {
             $productsQuery->where('price', '>=', $request['price_from']);
         }
 
-        if ($request->filled('price_to')){
+        if ($request->filled('price_to')) {
             $productsQuery->where('price', '<=', $request['price_to']);
         }
 
-        foreach (['new', 'hit','recommend'] as $field){
-            if ( $request->has($field)){
+        foreach (['new', 'hit', 'recommend'] as $field) {
+            if ($request->has($field)) {
                 $productsQuery->where($field, 1);
             }
         }
@@ -65,11 +66,18 @@ class MainController extends Controller
 //        dd($product);
 
         Subscription::create([
-            'email'=>$request['email'],
-            'product_id'=>$product->id,
+            'email' => $request['email'],
+            'product_id' => $product->id,
         ]);
 
         return redirect()->back()->with('success', 'Спасибо, мы сообщим Вам о поступлении товара.');
+    }
+
+    public function changeCurrency($currencyCode)
+    {
+        $currentCurrency = Currency::byCode($currencyCode)->firstOrFail();
+        session(['currency'=>$currentCurrency->code]);
+        return redirect()->back();
     }
 
 }

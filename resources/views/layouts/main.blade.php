@@ -9,6 +9,9 @@
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/starter-template.css" rel="stylesheet">
 </head>
@@ -20,36 +23,46 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li @routeactive('main')><a href="{{ route('main') }}">Все товары</a></li>
-                <li @routeactive('categories')><a href="{{ route('categories') }}">Категории</a>
+                <li @routeactive(
+                'main')><a href="{{ route('main') }}">Все товары</a></li>
+                <li @routeactive(
+                'categories')><a href="{{ route('categories') }}">Категории</a>
                 </li>
-                <li @routeactive('basket')><a href="{{ route('basket') }}">В корзину</a></li>
-                {{--                <li><a href="http://laravel-diplom-1.rdavydov.ru/reset">Сбросить проект в начальное состояние</a></li>--}}
+                <li @routeactive(
+                'basket')><a href="{{ route('basket') }}">В корзину</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{ \App\Services\ConvertCurrency::getCurrencySimbol()}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        @foreach(\App\Services\ConvertCurrency::getCurrencies() as $currency)
+                            <li><a href="{{ route('currency', $currency->code) }}">{{ $currency->simbol }}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+
             </ul>
 
-            @guest()
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('login') }}">Войти</a></li>
-                </ul>
-            @endguest
 
             @auth()
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('get-logout') }}">{{ isset(auth()->user()->name) ? auth()->user()->name :'' }}</a></li>
+                    <li>
+                        <a href="{{ route('get-logout') }}">{{ isset(auth()->user()->name) ? auth()->user()->name :'' }}</a>
+                    </li>
                 </ul>
                 @admin
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ route('home') }}">Панель администратора</a></li>
-                    </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('home') }}">Панель администратора</a></li>
+                </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ route('reset') }}">Вернуть сайт в исходное состояние</a></li>
                 </ul>
 
-                @else
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ route('person.order.index') }}">Мои заказы</a></li>
-                    </ul>
+            @else
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('person.order.index') }}">Мои заказы</a></li>
+                </ul>
                 @endadmin
 
                 <ul class="nav navbar-nav navbar-right">
@@ -57,6 +70,11 @@
                 </ul>
 
             @endauth
+            @guest()
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ route('login') }}">Войти</a></li>
+                </ul>
+            @endguest
 
 
         </div>

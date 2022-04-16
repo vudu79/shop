@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="card card-primary mt-3">
                 <h3>Подтвердите заказ</h3>
-                <p>Общая стоимоть заказа: {{ $order->calculateFullSumm() ?? '0 руб.' }}</p>
+                <p>Общая стоимоть заказа: {{ $order->calculateFullSumm() ?? '0 {{ \App\Services\ConvertCurrency::getCurrentSimbol() }}' }}</p>
                 <form method="post" action="{{ route('basket.confirm') }}">
                     @csrf
                     <div class="card-body">

@@ -2,7 +2,7 @@
 @section('content')
 
     <h1>{{ $product->name }}</h1>
-    <p>Цена: <b>{{ $product->price }} руб.</b></p>
+    <p>Цена: <b>{{ $product->price }} {{ \App\Services\ConvertCurrency::getCurrencySimbol() }}</b></p>
     <img src="{{ Storage::url($product->image) }}">
     <p>{{ $product->description }}</p>
 

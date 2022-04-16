@@ -15,7 +15,7 @@
         <img src="{{ Storage::url($product->image) }}" alt="iPhone X 64GB">
         <div class="caption">
             <h3>{{ $product->name }}</h3>
-            <p>Цена: {{ $product->price }} p.</p>
+            <p>Цена: {{ $product->price }} {{ \App\Services\ConvertCurrency::getCurrencySimbol() }}</p>
             <p>Категория: {{ isset($category) ? $category->name : $product->category->name }}</p>
             <p>В наличии: {{ $product->count }}</p>
             <p>
@@ -23,7 +23,7 @@
                 @csrf
                 <button type="submit" class="btn btn-primary"
                         role="button"
-                        role="button"9
+                        role="button"
                     {{ !$product->isAvailable() ? ' disabled' : '' }}
                 >{{ $product->isAvailable() ? 'Добавить в корзину' : 'Нет в наличии' }}
                 </button>

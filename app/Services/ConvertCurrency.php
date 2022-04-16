@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Currency;
+use Carbon\Carbon;
 use function Symfony\Component\String\s;
 
 class ConvertCurrency
@@ -20,6 +21,7 @@ class ConvertCurrency
         }
     }
 
+
     public static function convert($summ)
     {
         self::loadContainer();
@@ -28,8 +30,16 @@ class ConvertCurrency
 
         $targetCurrency = self::$container[$codeFromContainer];
 
+//        dd($targetCurrency->created_at->startOfDay());
+        if ($targetCurrency->rate != 0 || $targetCurrency->updated_at->startOfDay() != Carbon::now()->startOfDay()){
+            CurrencyRates::getRates();
+            self::loadContainer();
+            $targetCurrency = self::$container[$codeFromContainer];
+        }
+
         return round($summ / (is_null($targetCurrency->rate) ? 1 : $targetCurrency->rate), 2);
     }
+
 
     public static function getCurrencySimbol()
     {
@@ -41,6 +51,17 @@ class ConvertCurrency
     {
         self::loadContainer();
         return self::$container;
+    }
+
+
+    public static function getBaseCurrency()
+    {
+        self::loadContainer();
+        foreach (self::$container as $code => $currency) {
+            if ($currency->isMain()){
+                return $currency;
+            }
+        }
     }
 
 }

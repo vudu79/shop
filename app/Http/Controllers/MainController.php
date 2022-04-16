@@ -8,12 +8,13 @@ use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Product;
 use App\Models\Subscription;
+use App\Services\CurrencyRates;
 
 class MainController extends Controller
 {
+
     public function index(ProductsFilterRequest $request)
     {
-//        session()->forget('full_order_summ');
 
 //        \Debugbar::info("sdfsasdadsasdasdfdsfdsf");
 //        Log::channel('single')->info($request->getClientIp());
